@@ -30,5 +30,39 @@
  * @returns {{ tipPercentage: number, tipAmount: number, totalAmount: number } | null}
  */
 export function calculateTip(billAmount, serviceRating) {
-  // Your code here
+  // 1. Error Handling: Return null if bill is 0/negative 
+  // OR if rating is NOT 1, 2, 3, 4, or 5
+  if (billAmount <= 0 || serviceRating < 1 || serviceRating > 5 || !Number.isInteger(serviceRating)) {
+    return null;
+  }
+
+  let tipPercentage;
+
+  // 2. Determine percentage based on rating
+  if (serviceRating === 1) {
+    tipPercentage = 5;
+  } else if (serviceRating === 2) {
+    tipPercentage = 10;
+  } else if (serviceRating === 3) {
+    tipPercentage = 15;
+  } else if (serviceRating === 4) {
+    tipPercentage = 20;
+  } else {
+    // Since we validated above, this must be 5
+    tipPercentage = 25;
+  }
+
+  // 3. Perform calculations
+  // We divide tipPercentage by 100 to get the decimal (e.g., 15 -> 0.15)
+  const tipAmount = parseFloat((billAmount * (tipPercentage / 100)).toFixed(2));
+  const totalAmount = parseFloat((billAmount + tipAmount).toFixed(2));
+
+  return {
+    tipPercentage: tipPercentage,
+    tipAmount: tipAmount,
+    totalAmount: totalAmount
+  };
 }
+
+
+

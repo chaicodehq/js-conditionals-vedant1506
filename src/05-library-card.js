@@ -28,10 +28,23 @@
  *     { allowed: true, message: "You may borrow up to 3 books" }
  *
  * @param {number} memberAge - The member's age
- * @param {boolean} hasValidCard - Whether they have a valid library card
+ * @param {boolean} hasValidCard  - Whether they have a valid library card
  * @param {number} overdueBooks - Number of overdue books
  * @returns {{ allowed: boolean, message: string }}
  */
 export function canBorrowBook(memberAge, hasValidCard, overdueBooks) {
-  // Your code here
+  if (memberAge < 6) {
+    return { allowed: false, message: "Too young - must be at least 6 years old" };
+  }
+
+  if (!hasValidCard) {
+    return { allowed: false, message: "Invalid library card - please renew at the front desk" };
+  }
+
+  if (overdueBooks > 0) {
+    return { allowed: false, message: `Please return your ${overdueBooks} overdue book(s) first` };
+  }
+
+  return { allowed: true, message: "You may borrow up to 3 books" };
+
 }
